@@ -53,7 +53,8 @@ FETCH FIRST 10 ROWS ONLY;
 SELECT
     ordernumber "orderNumber",
     SUM(quantityordered) "itemsCount",
-    CAST(SUM(quantityordered * priceeach) AS NUMERIC(10,2)) "totalPrice"
+    CAST(SUM(quantityordered * priceeach) AS NUMERIC(10,2)) "totalPrice",
+    rank() over (ORDER BY SUM(quantityordered * priceeach) ASC)
 FROM
     orders NATURAL JOIN orderdetails
 GROUP BY
